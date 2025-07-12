@@ -1,11 +1,20 @@
-
-# TODO: map öäü to arrows
-
 # Activate plugins --- TODO: move them into their own directory
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /opt/homebrew/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 source /opt/homebrew/opt/zsh-vi-mode/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
+
+#Insert mode bindings
+bindkey -M viins 'ö' forward-char
+bindkey -M viins 'ü' up-line-or-history
+bindkey -M viins 'ä' down-line-or-history
+bindkey -M viins '^L' backward-kill-word
+
+#Normal (command) mode bindings
+bindkey -M vicmd 'ö' forward-char
+bindkey -M vicmd 'ü' up-line-or-history
+bindkey -M vicmd 'ä' down-line-or-history
+
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
@@ -34,11 +43,11 @@ ZSH_THEME="robbyrussell"
 
 # Uncomment one of the following lines to change the auto-update behavior
 # zstyle ':omz:update' mode disabled  # disable automatic updates
-# zstyle ':omz:update' mode auto      # update automatically without asking
+zstyle ':omz:update' mode auto      # update automatically without asking
 # zstyle ':omz:update' mode reminder  # just remind me to update when it's time
 
 # Uncomment the following line to change how often to auto-update (in days).
-# zstyle ':omz:update' frequency 13
+zstyle ':omz:update' frequency 13
 
 # Uncomment the following line if pasting URLs and other text is messed up.
 # DISABLE_MAGIC_FUNCTIONS="true"
