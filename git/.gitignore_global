@@ -1,0 +1,12 @@
+# macOS system files
+.DS_Store
+
+# Node.js
+node_modules/
+
+# VSCode
+.vscode/
+
+# JetBrains IDEs
+.idea/
+
