@@ -1,4 +1,3 @@
-# TODO: setup shortcuts with the leader key from my vimrc
 # TODO: ansible set up in config repo for the raspberry and the jetson
 # TODO: figure out how to use ohmyzsh aliases in nvim
 # TODO: create guest terminal user
