@@ -1,20 +1,31 @@
-# Activate plugins --- TODO: move them into their own directory
-source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /opt/homebrew/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
-source /opt/homebrew/opt/zsh-vi-mode/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
+# TODO: setup shortcuts with the leader key from my vimrc
+# TODO: ansible set up in config repo for the raspberry and the jetson
+# TODO: figure out how to use ohmyzsh aliases in nvim
+# TODO: create guest terminal user
+
+# Terminal should use true color instead of being limited to 256 colors
+# Ubuntu: consider Kitty or Alacritty
+export COLORTERM=truecolor
+
+# Source oh my zsh plugins 
+source ./.zsh_plugins
 
 #Insert mode bindings
 bindkey -M viins 'ö' forward-char
-bindkey -M viins 'ü' up-line-or-history
-bindkey -M viins 'ä' down-line-or-history
+bindkey -M viins 'ü' up-line-or-search
+# bindkey -M viins 'ü' up-line-or-history
+# bindkey -M viins 'ä' down-line-or-history
+bindkey -M viins 'ä' menu-complete
 bindkey -M viins '^L' backward-kill-word
 
 #Normal (command) mode bindings
 bindkey -M vicmd 'ö' forward-char
-bindkey -M vicmd 'ü' up-line-or-history
 bindkey -M vicmd 'ä' down-line-or-history
+bindkey -M vicmd 'ü' history-incremental-search-backward
+# bindkey -M vicmd 'ü' up-line-or-history
 
+bindkey 'ä' menu-select
+bindkey 'ü' up-line-or-search
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
