@@ -29,7 +29,9 @@ local opts = {}
 
 require("lazy").setup(plugins, opts)
 local builtin = require("telescope.builtin")
-vim.keymap.set('n', '<C-p>', builtin.find_files, {})
+vim.keymap.set('n', '<C-p>', function()
+  builtin.find_files({hidden = true})
+end, {})
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
 
 local config = require("nvim-treesitter.configs")
