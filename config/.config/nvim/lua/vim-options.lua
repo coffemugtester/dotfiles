@@ -10,7 +10,7 @@ vim.o.autoindent = true
 
 
 -- Map shortcuts
-vim.keymap.set("n", "<leader>w", ":wa<CR>")       -- Save
+vim.keymap.set("n", "<leader>w", ":w<CR>")       -- Save
 vim.keymap.set("n", "<leader>q", ":q<CR>")       -- Quit
 vim.keymap.set("n", "<leader>x", ":wq<CR>")      -- Save & Quit
 vim.keymap.set("n", "<leader>e", ":Ex<CR>")      -- Open netrw
