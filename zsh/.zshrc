@@ -2,6 +2,12 @@
 # TODO: figure out how to use ohmyzsh aliases in nvim
 # TODO: create guest terminal user
 
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && . "/opt/homebrew/opt/nvm/nvm.sh"  # Load nvm
+# [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && . "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # Optional: tab completion
+
+
 # Terminal should use true color instead of being limited to 256 colors
 # Ubuntu: consider Kitty or Alacritty
 export COLORTERM=truecolor
