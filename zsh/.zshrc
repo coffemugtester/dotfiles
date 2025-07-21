@@ -1,3 +1,4 @@
+# TODO: install docker and try applying nvim setup there
 # TODO: ansible set up in config repo for the raspberry and the jetson
 # TODO: figure out how to use ohmyzsh aliases in nvim
 # TODO: create guest terminal user
@@ -7,6 +8,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && . "/opt/homebrew/opt/nvm/nvm.sh"  # Load nvm
 # [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && . "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # Optional: tab completion
 
+export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 
 # Terminal should use true color instead of being limited to 256 colors
 # Ubuntu: consider Kitty or Alacritty
