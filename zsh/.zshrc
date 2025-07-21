@@ -1,3 +1,4 @@
+# TODO: list dependency formulas installed for nvim
 # TODO: install docker and try applying nvim setup there
 # TODO: ansible set up in config repo for the raspberry and the jetson
 # TODO: figure out how to use ohmyzsh aliases in nvim
@@ -11,7 +12,6 @@ export NVM_DIR="$HOME/.nvm"
 export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 
 # Terminal should use true color instead of being limited to 256 colors
-# Ubuntu: consider Kitty or Alacritty
 export COLORTERM=truecolor
 
 # Source oh my zsh plugins 
@@ -20,10 +20,10 @@ source ./.zsh_plugins
 #Insert mode bindings
 bindkey -M viins 'ö' forward-char
 bindkey -M viins 'ü' up-line-or-search
-# bindkey -M viins 'ü' up-line-or-history
-# bindkey -M viins 'ä' down-line-or-history
 bindkey -M viins 'ä' menu-complete
 bindkey -M viins '^L' backward-kill-word
+# bindkey -M viins 'ü' up-line-or-history
+# bindkey -M viins 'ä' down-line-or-history
 
 #Normal (command) mode bindings
 bindkey -M vicmd 'ö' forward-char
