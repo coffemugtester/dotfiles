@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# asdf-plugin: golang 1.24.5
+exec asdf exec "go" "$@"
