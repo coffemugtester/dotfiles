@@ -1,5 +1,6 @@
+# TODO: use this for reference to test neovim in a docker container https://github.com/thomaspttn/nvim-docker/blob/main/install.sh
 # TODO: list dependency formulas installed for nvim
-# TODO: install docker and try applying nvim setup there
+# TODO: install docker and try applying nvim setup there -- https://www.youtube.com/watch?v=FzINeQ92g3w devcontainers
 # TODO: ansible set up in config repo for the raspberry and the jetson
 # TODO: figure out how to use ohmyzsh aliases in nvim
 # TODO: create guest terminal user
@@ -12,7 +13,7 @@ export NVM_DIR="$HOME/.nvm"
 export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 
 # Terminal should use true color instead of being limited to 256 colors
-export COLORTERM=truecolor
+# export COLORTERM=truecolor
 
 # Source oh my zsh plugins 
 source ./.zsh_plugins
