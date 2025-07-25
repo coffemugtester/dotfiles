@@ -9,7 +9,10 @@ return {
     null_ls.setup({
       sources = {
         null_ls.builtins.formatting.stylua,
-        null_ls.builtins.formatting.prettier.with({
+        null_ls.builtins.formatting.prettierd.with({
+          -- env = {
+          -- PRETTIERD_DEFAULT_CONFIG = vim.fn.expand("~/.config/nvim/utils/linter-config/.prettierrc.json"),
+          -- },
           -- Optionally specify filetypes:
           filetypes = {
             "javascript",
@@ -37,6 +40,16 @@ return {
         }),
         -- --        null_ls.builtins.formatting.rubocop -- remember to add diagnostics for used languages
       },
+      on_attach = function(client, bufnr)
+        if client.supports_method("textDocument/formatting") then
+          vim.api.nvim_create_autocmd("BufWritePre", {
+            buffer = bufnr,
+            callback = function()
+              vim.lsp.buf.format({ bufnr = bufnr })
+            end,
+          })
+        end
+      end,
     })
     vim.keymap.set("n", "<leader>gf", vim.lsp.buf.format, {})
   end,
