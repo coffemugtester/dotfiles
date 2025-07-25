@@ -1,6 +1,5 @@
 return {
   "nvimtools/none-ls.nvim", -- use :Mason to /search and (I)nstall e.g.: stylua
-  event = "VeryLazy",
   dependencies = {
     "nvimtools/none-ls-extras.nvim",
   },
