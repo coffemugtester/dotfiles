@@ -40,6 +40,7 @@ return {
         }),
         -- --        null_ls.builtins.formatting.rubocop -- remember to add diagnostics for used languages
       },
+      -- on_attach run this function which is going to format the document.
       on_attach = function(client, bufnr)
         if client.supports_method("textDocument/formatting") then
           vim.api.nvim_create_autocmd("BufWritePre", {
