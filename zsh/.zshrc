@@ -1,4 +1,4 @@
-# TODO: Neovim for Nextjs https://www.youtube.com/watch?v=8um8OYwvz3c
+# TODO: Try qutebrowser
 # TODO: Lazygit, ChatGPT on the CLI https://www.youtube.com/watch?v=5wy2iLU5fs0
 # TODO: https://medium.com/aimonks/accessing-chatgpt-from-command-line-d65ba894c08 | https://medium.com/aimonks/accessing-chatgpt-from-command-line-d65ba894c08
 # TODO: get script to download, install nvim and put it in path
@@ -19,9 +19,11 @@ export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 # Terminal should use true color instead of being limited to 256 colors
 # export COLORTERM=truecolor
 
-# Source oh my zsh plugins 
-source ./.zsh_plugins
+autoload -Uz add-zsh-hook
 
+add-zsh-hook -Uz precmd setup-bindkeys
+
+setup-bindkeys() {
 #Insert mode bindings
 bindkey -M viins 'ö' forward-char
 bindkey -M viins 'ü' up-line-or-search
@@ -38,6 +40,11 @@ bindkey -M vicmd 'ü' history-incremental-search-backward
 
 bindkey 'ä' menu-select
 bindkey 'ü' up-line-or-search
+  # Only run once
+  add-zsh-hook -d precmd setup-bindkeys
+}
+
+
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
@@ -143,6 +150,9 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# Source oh my zsh plugins 
+source ./.zsh_plugins
 
 # Starship
 eval "$(starship init zsh)"

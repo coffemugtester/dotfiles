@@ -4,6 +4,10 @@ bold = { family = "JetBrainsMono Nerd Font", style = "Bold" }
 italic = { family = "JetBrainsMono Nerd Font", style = "Italic" }
 bold_italic = { family = "JetBrainsMono Nerd Font", style = "Bold Italic" }
 
+[colors.primary]
+foreground = "0x00bfff"  # Blue
+# background = "0x000000"  # Optional: black background for contrast
+
 [keyboard]
 [[keyboard.bindings]]
 key = "Up"
