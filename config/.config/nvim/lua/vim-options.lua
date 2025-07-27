@@ -11,10 +11,16 @@ vim.o.autoindent = true
 
 -- Map shortcuts
 vim.keymap.set("n", "<leader>s", ":source %<CR>", { desc = "Source current file" })
-vim.keymap.set("n", "<leader>w", ":w<CR>")       -- Save
-vim.keymap.set("n", "<leader>q", ":q<CR>")       -- Quit
-vim.keymap.set("n", "<leader>x", ":wq<CR>")      -- Save & Quit
-vim.keymap.set("n", "<leader>e", ":Ex<CR>")      -- Open netrw
+vim.keymap.set("n", "<leader>w", ":w<CR>")  -- Save
+vim.keymap.set("n", "<leader>q", ":q<CR>")  -- Quit
+vim.keymap.set("n", "<leader>x", ":wq<CR>") -- Save & Quit
+vim.keymap.set("n", "<leader>e", ":Ex<CR>") -- Open netrw
+
+-- Navigate neovim panes with just ctrl instead of ctrl + w (wincmd)
+vim.keymap.set("n", "<c-k>", ":wincmd k <CR>")
+vim.keymap.set("n", "<c-j>", ":wincmd j <CR>")
+vim.keymap.set("n", "<c-h>", ":wincmd h <CR>")
+vim.keymap.set("n", "<c-l>", ":wincmd l <CR>")
 
 -- Neotree
 -- vim.keymap.set("n", "<leader>n", ":Neotree filesystem reveal left<CR>") -- Open project tree
