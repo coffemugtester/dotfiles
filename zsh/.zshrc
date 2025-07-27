@@ -1,13 +1,11 @@
-# TODO: Try qutebrowser
-# TODO: Lazygit, ChatGPT on the CLI https://www.youtube.com/watch?v=5wy2iLU5fs0
-# TODO: https://medium.com/aimonks/accessing-chatgpt-from-command-line-d65ba894c08 | https://medium.com/aimonks/accessing-chatgpt-from-command-line-d65ba894c08
-# TODO: get script to download, install nvim and put it in path
-# TODO: get vim for docs https://chromewebstore.google.com/detail/vim-for-google-docs/aphmodfjbhofkpibocbggkdfnpbpjmpp
-# TODO: install docker and try applying nvim setup there -- reference: https://github.com/thomaspttn/nvim-docker/blob/main/install.sh lts nvim wget installed 
-# TODO: ChatGPT for Neovim https://www.youtube.com/watch?v=7k0KZsheLP4
-# TODO: ansible set up in config repo for the raspberry and the jetson
-# TODO: figure out how to use ohmyzsh aliases in nvim
+# TODO: pull latest nvim config to work machine
 # TODO: create guest terminal user
+# TODO: get script to download, install nvim and put it in path reference: https://github.com/thomaspttn/nvim-docker/blob/main/install.sh lts nvim wget installed 
+# TODO: ansible set up in config repo for the raspberry and the jetson
+# TODO; gen.nvim plugin as interface with local llm's
+# TODO: https://medium.com/aimonks/accessing-chatgpt-from-command-line-d65ba894c08 | https://medium.com/aimonks/accessing-chatgpt-from-command-line-d65ba894c08
+# TODO: ChatGPT for Neovim https://www.youtube.com/watch?v=7k0KZsheLP4 | check terminal password manager: https://www.youtube.com/watch?v=7k0KZsheLP4
+# TODO: Rename username 
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && . "/opt/homebrew/opt/nvm/nvm.sh"  # Load nvm
