@@ -9,7 +9,6 @@
 # TODO: figure out how to use ohmyzsh aliases in nvim
 # TODO: create guest terminal user
 
-
 export NVM_DIR="$HOME/.nvm"
 [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && . "/opt/homebrew/opt/nvm/nvm.sh"  # Load nvm
 # [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && . "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # Optional: tab completion
@@ -44,6 +43,7 @@ bindkey 'ü' up-line-or-search
   add-zsh-hook -d precmd setup-bindkeys
 }
 
+export PATH="$HOME/.tmuxifier/bin:$PATH"
 
 
 # If you come from bash you might have to change your $PATH.
@@ -153,6 +153,15 @@ source $ZSH/oh-my-zsh.sh
 
 # Source oh my zsh plugins 
 source ./.zsh_plugins
+
+# Tmuxifier
+eval "$(tmuxifier init -)"
+# Updating tmuxifier
+# cd ~/.tmuxifier # or where you've cloned tmuxifier to
+# git pull
+# Help for tmuxifier
+# tmuxifier help
+# TODO: go through usage and set tmuxifier up --- https://github.com/jimeh/tmuxifier
 
 # Starship
 eval "$(starship init zsh)"
