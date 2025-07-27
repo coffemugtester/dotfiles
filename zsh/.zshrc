@@ -43,8 +43,7 @@ bindkey 'ü' up-line-or-search
   add-zsh-hook -d precmd setup-bindkeys
 }
 
-export PATH="$HOME/.tmuxifier/bin:$PATH"
-
+export PATH="$HOME/.tmux/plugins/tmuxifier/bin:$PATH"
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
@@ -156,9 +155,6 @@ source ./.zsh_plugins
 
 # Tmuxifier
 eval "$(tmuxifier init -)"
-# Updating tmuxifier
-# cd ~/.tmuxifier # or where you've cloned tmuxifier to
-# git pull
 # Help for tmuxifier
 # tmuxifier help
 # TODO: go through usage and set tmuxifier up --- https://github.com/jimeh/tmuxifier
