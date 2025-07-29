@@ -38,7 +38,7 @@ return {
           },
           command = "eslint_d",
         }),
-        require("none-ls.code_action.eslint"),
+        require("none-ls.code_actions.eslint"),
         -- --        null_ls.builtins.formatting.rubocop -- remember to add diagnostics for used languages
       },
       -- on_attach run this function which is going to format the document.
