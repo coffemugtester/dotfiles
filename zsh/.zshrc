@@ -1,7 +1,5 @@
-# TODO: :Neotree reveal command 
 # TODO: undotree vim
 # TODO: comment blocks - vim commentary plugin
-# TODO: import sorting
 # TODO: project structure
 # TODO: refactoring name
 # TODO: problem list
