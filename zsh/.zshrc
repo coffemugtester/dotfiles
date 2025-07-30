@@ -1,3 +1,5 @@
+# TODO: :Neotree reveal command 
+# TODO: undotree vim
 # TODO: comment blocks - vim commentary plugin
 # TODO: import sorting
 # TODO: project structure
@@ -6,7 +8,6 @@
 # TODO: telescope - function to live grep directories excluding some e.g.: node_modules, .next, ...
 # TODO: set up tmuxifier's .tmux-layouts next to .tmux.conf
 # TODO: figure out how to stop alacritty to constantly ask for access to other folders
-# TODO: pull latest nvim config to work machine
 # TODO: create guest terminal user
 # TODO: get script to download, install nvim and put it in path reference: https://github.com/thomaspttn/nvim-docker/blob/main/install.sh lts nvim wget installed 
 # TODO: ansible set up in config repo for the raspberry and the jetson

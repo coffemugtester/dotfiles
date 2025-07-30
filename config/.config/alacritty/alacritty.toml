@@ -10,13 +10,13 @@ foreground = "0x00bfff"  # Blue
 
 [keyboard]
 [[keyboard.bindings]]
-key = "Up"
-mods = "Control|Shift"
+key = "k"
+mods = "Control"
 action = "ScrollLineUp"
 
 [[keyboard.bindings]]
-key = "Down"
-mods = "Control|Shift"
+key = "j"
+mods = "Control"
 action = "ScrollLineDown"
 
 [window]
