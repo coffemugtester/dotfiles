@@ -11,12 +11,12 @@ foreground = "0x00bfff"  # Blue
 [keyboard]
 [[keyboard.bindings]]
 key = "k"
-mods = "Control"
+mods = "Control|Shift"
 action = "ScrollLineUp"
 
 [[keyboard.bindings]]
 key = "j"
-mods = "Control"
+mods = "Control|Shift"
 action = "ScrollLineDown"
 
 [window]

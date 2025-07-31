@@ -1,0 +1,120 @@
+---
+- name: Install development tools via Homebrew
+  hosts: localhost
+  gather_facts: true
+  vars:
+    common_brew_packages:
+      - asdf
+      - ca-certificates
+      - delve
+      - docker-completion
+      - gettext
+      - git
+      - git-filter-repo
+      - htop
+      - lazydocker
+      - lazygit
+      - libevent
+      - libunistring
+      - libuv
+      - lpeg
+      - luv
+      - mpdecimal
+      - ncurses
+      - neovim
+      - nvm
+      - openssl@3
+      - pcre2
+      - python@3.13
+      - readline
+      - ripgrep
+      - sqlite
+      - stow
+      - starship
+      - tmux
+      - tree-sitter
+      - unibilium
+      - utf8proc
+      - zsh-autocomplete
+      - zsh-autosuggestions
+      - zsh-syntax-highlighting
+      - zsh-vi-mode
+    mac_only_brew_packages:
+      - colima
+    mac_only_casks:
+      - alacritty
+      - amethyst
+      - qutebrowser
+
+  tasks:
+    - name: Ensure Homebrew is installed on macOS
+      when: ansible_facts['os_family'] == "Darwin"
+      homebrew:
+        state: present
+
+    - name: Ensure Linuxbrew is installed on Linux
+      when: ansible_facts['os_family'] == "Debian"
+      shell: |
+        test -x /home/linuxbrew/.linuxbrew/bin/brew || \
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+      args:
+        executable: /bin/bash
+
+    - name: Ensure brew is in PATH for Linux
+      when: ansible_facts['os_family'] == "Debian"
+      shell: |
+        echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.profile
+        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+      args:
+        executable: /bin/bash
+
+    - name: Install shared Homebrew formulae
+      community.general.homebrew:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ common_brew_packages }}"
+      environment:
+        PATH: "/home/linuxbrew/.linuxbrew/bin:/opt/homebrew/bin:{{ ansible_env.PATH }}"
+
+    - name: Install macOS-only brew packages
+      when: ansible_facts['os_family'] == "Darwin"
+      community.general.homebrew:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ mac_only_brew_packages }}"
+
+    - name: Install macOS-only casks
+      when: ansible_facts['os_family'] == "Darwin"
+      community.general.homebrew_cask:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ mac_only_casks }}"
+
+    - name: Ensure Zsh is installed
+      package:
+        name: zsh
+        state: present
+
+    - name: Install Oh My Zsh
+      become: false
+      shell: |
+        export RUNZSH=no
+        export CHSH=no
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+      args:
+        executable: /bin/bash
+        creates: ~/.oh-my-zsh
+
+    - name: Copy dotfiles to home directory
+      copy:
+        src: "./{{ item }}"
+        dest: "{{ ansible_env.HOME }}/dotfiles/{{ item }}"
+        owner: "{{ ansible_user }}"
+        mode: preserve
+      loop:
+        - zsh
+        - git
+        - tmux
+        - config
+        - vim
+
