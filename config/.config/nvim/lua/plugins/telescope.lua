@@ -25,6 +25,11 @@ return {
 				})
 			end, {})
 			vim.keymap.set("n", "<leader>fd", "<cmd>Telescope diagnostics bufnr=0<CR>", { desc = "File Diagnostics" })
+			-- How to refactor:
+			-- either: grn for renaming a variable in the project
+			-- or: telescope live_grep --> CTRL + q to make a quickfix list
+			-- then: :cdo s/previousName/newName/gc
+			-- and: don't forget to :wa
 		end,
 	},
 	{

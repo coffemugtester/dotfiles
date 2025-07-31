@@ -1,6 +1,4 @@
 # TODO: undotree vim
-# TODO: comment blocks - vim commentary plugin
-# TODO: project structure
 # TODO: refactoring name
 # TODO: set up tmuxifier's .tmux-layouts next to .tmux.conf
 # TODO: figure out how to stop alacritty to constantly ask for access to other folders
