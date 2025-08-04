@@ -111,34 +111,8 @@
         path: "/home/linuxbrew/.linuxbrew/bin"
       become_user: "{{ homebrew_user }}"
       become: yes
-      # tags:
-      # - brew-install
-
-    #TEST
-
-    - name: Check if Homebrew package is already installed
-      ansible.builtin.shell: |
-        brew list --formula {{ item }}
-      register: brew_check_results
-      failed_when: false
-      changed_when: false
-      loop: "{{ brew_formulae }}"
-      loop_control:
-        label: "{{ item }}"
-      tags: 
-        - brew-install
-
-    - name: Install each package with --build-from-source if not already installed
-      ansible.builtin.shell: |
-        brew install --build-from-source {{ item }}
-      when: brew_check_results.results[loop.index0].rc != 0
-      loop: "{{ brew_formulae }}"
-      loop_control:
-        label: "{{ item }}"
-      args:
-        executable: /bin/bash
-      tags: 
-        - brew-install
+      tags:
+      - brew-install
 
     - name: Ensure ~/dotfiles directory exists
       become: yes
