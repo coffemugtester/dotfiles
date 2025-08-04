@@ -134,7 +134,6 @@
         mode: preserve
       loop:
         - alacritty
-        - htop  
         - nvim
         # - git
         # - vim
