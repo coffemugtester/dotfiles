@@ -162,6 +162,13 @@
       tags:
       - stow
 
+    # TODO: missing docs to put in the repo:
+    # /home/urbpi/.zsh_plugins:source:1: no such file or directory: /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+    # /home/urbpi/.zsh_plugins:source:2: no such file or directory: /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+    # /home/urbpi/.zsh_plugins:source:3: no such file or directory: /opt/homebrew/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+    # /home/urbpi/.zsh_plugins:source:4: no such file or directory: /opt/homebrew/opt/zsh-vi-mode/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
+    # /home/urbpi/.zshrc:153: command not found: tmuxifier
+    # /home/urbpi/.zshrc:159: command not found: starship have to install the preset too
     - name: Copy config dotfiles packages to user's home
       copy:
         src: "./{{ item }}"
@@ -183,9 +190,15 @@
         cd ~/dotfiles
         stow git tmux vim zsh --target /home/{{ homebrew_user }} --verbose=2
       args:
-        executable: /bin/bash  # optional: in case your system prefers zsh
+        executable: /usr/bin/bash  # optional: in case your system prefers zsh
       tags:
       - stow
+
+    # TODO: had to manually install swith to zsh. 
+    # TODO: had to manually install stow. Error was that stow was not existing
+    # TODO: had to manually install starship. Error was that stow was not existing
+    # TODO: had to manually install tmuxifier. Error was that stow was not existing
+    # TODO: have to manually install Nerd Fonts.
 
     - name: Install Oh My Zsh # noqa: latest
       ansible.builtin.git:
@@ -210,6 +223,13 @@
         state: present
       tags:
       - zsh
+
+    - name: Run zsh
+      shell: |
+        zsh
+      args: /usr/bin/zsh
+      tags:
+       - switch-zsh
 
     - name: Change user shell to zsh
       become: true
