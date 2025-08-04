@@ -16,7 +16,7 @@
       - asdf
       - ca-certificates
       # - colima
-      - delve
+      # - delve
       - docker
       - docker-completion
       - gettext
