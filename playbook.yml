@@ -158,7 +158,7 @@
         cd ~/dotfiles
         stow config --target /home/{{ homebrew_user }}/.config --verbose=2
       args:
-        executable: /bin/bash  # optional: in case your system prefers zsh
+        executable: /usr/bin/bash  # optional: in case your system prefers zsh
       tags:
       - dotfiles
 
