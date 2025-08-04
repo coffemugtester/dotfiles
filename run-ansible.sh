@@ -1,5 +1,8 @@
 #!/bin/bash
 
+#TODO: add ssh keys
+#TODO: verify zsh is default shell and there's no zshrc
+
 set -e
 
 # Optional: Update system packages
