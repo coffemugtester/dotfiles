@@ -1,12 +1,23 @@
 ---
-- name: Install development tools via Homebrew
+- name: Manually install Homebrew via git
   hosts: localhost
-  gather_facts: true
+  #hosts: all
+  connection: local
+    #become: yes
+    #become_user: "{{ ansible_user_id }}"
+  # yes might fail in a minimal docker env
+  gather_facts: yes
   vars:
-    common_brew_packages:
+    homebrew_user: "{{ ansible_user_id }}" # #"{{ ansible_user_id }}" #homebrew_user: "{{ lookup('env', 'USER') }}"
+    homebrew_git_repo: https://github.com/Homebrew/brew
+    homebrew_release: master  # or a tag like 4.2.0
+    brew_formulae: 
+      - neovim
       - asdf
       - ca-certificates
+      - colima
       - delve
+      - docker
       - docker-completion
       - gettext
       - git
@@ -17,11 +28,12 @@
       - libevent
       - libunistring
       - libuv
+      - lima
       - lpeg
+      - luajit
       - luv
       - mpdecimal
       - ncurses
-      - neovim
       - nvm
       - openssl@3
       - pcre2
@@ -29,92 +41,116 @@
       - readline
       - ripgrep
       - sqlite
-      - stow
       - starship
+      - stow
       - tmux
       - tree-sitter
       - unibilium
       - utf8proc
+      - xz
       - zsh-autocomplete
       - zsh-autosuggestions
       - zsh-syntax-highlighting
       - zsh-vi-mode
-    mac_only_brew_packages:
-      - colima
-    mac_only_casks:
-      - alacritty
-      - amethyst
-      - qutebrowser
+
 
   tasks:
-    - name: Ensure Homebrew is installed on macOS
-      when: ansible_facts['os_family'] == "Darwin"
-      homebrew:
-        state: present
 
-    - name: Ensure Linuxbrew is installed on Linux
-      when: ansible_facts['os_family'] == "Debian"
-      shell: |
-        test -x /home/linuxbrew/.linuxbrew/bin/brew || \
-        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-      args:
-        executable: /bin/bash
+    - name: Ensure /home/linuxbrew/.linuxbrew exists
+      become: yes
+      file:
+        path: "/home/linuxbrew/.linuxbrew"
+        state: directory
+        owner: "{{ homebrew_user }}"
+        group: "{{ homebrew_user }}"
+        mode: '0755'
 
-    - name: Ensure brew is in PATH for Linux
-      when: ansible_facts['os_family'] == "Debian"
-      shell: |
-        echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.profile
-        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-      args:
-        executable: /bin/bash
+    - name: Clone Homebrew GitHub repo
+      ansible.builtin.git:
+        repo: "{{ homebrew_git_repo }}"
+        dest: "/home/linuxbrew/.linuxbrew/Homebrew"
+        version: "{{ homebrew_release }}"
+      become_user: "{{ homebrew_user }}"
 
-    - name: Install shared Homebrew formulae
-      community.general.homebrew:
-        name: "{{ item }}"
-        state: present
-      loop: "{{ common_brew_packages }}"
-      environment:
-        PATH: "/home/linuxbrew/.linuxbrew/bin:/opt/homebrew/bin:{{ ansible_env.PATH }}"
+    - name: Create bin directory for brew
+      ansible.builtin.file:
+        path: "/home/linuxbrew/.linuxbrew/bin"
+        state: directory
+        owner: "{{ homebrew_user }}"
+        group: "{{ homebrew_user }}"
 
-    - name: Install macOS-only brew packages
-      when: ansible_facts['os_family'] == "Darwin"
-      community.general.homebrew:
-        name: "{{ item }}"
-        state: present
-      loop: "{{ mac_only_brew_packages }}"
+    - name: Create a symbolic link for brew
+      ansible.builtin.file:
+        src: "/home/linuxbrew/.linuxbrew/Homebrew/bin/brew"
+        dest: "/home/linuxbrew/.linuxbrew/bin/brew"
+        owner: "{{ homebrew_user }}"
+        group: "{{ homebrew_user }}"
+        state: link
 
-    - name: Install macOS-only casks
-      when: ansible_facts['os_family'] == "Darwin"
-      community.general.homebrew_cask:
-        name: "{{ item }}"
-        state: present
-      loop: "{{ mac_only_casks }}"
-
-    - name: Ensure Zsh is installed
-      package:
-        name: zsh
-        state: present
-
-    - name: Install Oh My Zsh
+    - name: Add brew to .zshrc
       become: false
-      shell: |
-        export RUNZSH=no
-        export CHSH=no
-        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-      args:
-        executable: /bin/bash
-        creates: ~/.oh-my-zsh
+      lineinfile:
+        path: "/home/{{ homebrew_user }}/.zshrc"
+        line: 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"'
+        insertafter: EOF
 
-    - name: Copy dotfiles to home directory
+    - name: Install Formula
+      community.general.homebrew:
+        name: "{{ brew_formulae }}"
+        state: present
+        path: "/home/linuxbrew/.linuxbrew/bin"
+      become_user: "{{ homebrew_user }}"
+      become: yes
+
+    - name: Ensure ~/dotfiles directory exists
+      become: yes
+      file:
+        path: "/home/{{ homebrew_user }}/dotfiles/config/"
+        state: directory
+        owner: "{{ homebrew_user }}"
+        group: "{{ homebrew_user }}"
+        mode: '0755'
+
+    - name: Copy dotfiles packages to user's home
       copy:
         src: "./{{ item }}"
-        dest: "{{ ansible_env.HOME }}/dotfiles/{{ item }}"
-        owner: "{{ ansible_user }}"
+        dest: "/home/{{ homebrew_user }}/dotfiles/config"
+        owner: "{{ homebrew_user }}"
+        group: "{{ homebrew_user }}"
         mode: preserve
       loop:
-        - zsh
-        - git
-        - tmux
-        - config
-        - vim
+        - alacritty
+        - htop  
+        - nvim
+        # - git
+        # - vim
+        # - tmux
+
+    - name: Ensure ~/.config directory exists
+      become: yes
+      file:
+        path: "/home/{{ homebrew_user }}/.config/"
+        state: directory
+        owner: "{{ homebrew_user }}"
+        group: "{{ homebrew_user }}"
+        mode: '0755'
+
+    - name: Run stow with Homebrew path
+      shell: |
+        export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+        cd ~/dotfiles
+        stow config --target /home/{{ homebrew_user }}/.config --verbose=2
+      args:
+        executable: /bin/zsh  # optional: in case your system prefers zsh
+
+    # - name: Run stow
+    #   shell: "stow ~/dotfiles --target {{ ansible_env.HOME }} --verbose=2"
+    #   register: result
+    #   changed_when: 'result.stderr is search("LINK: ")'
+
+    - name: Install Oh My Zsh # noqa: latest
+      ansible.builtin.git:
+        repo: https://github.com/ohmyzsh/ohmyzsh.git
+        dest: ~/.oh-my-zsh
+        depth: 1
 
