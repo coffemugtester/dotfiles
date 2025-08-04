@@ -194,6 +194,7 @@
       tags:
       - stow
 
+    # TODO: have to git init and set remote for dotfiles
     # TODO: had to manually install swith to zsh. 
     # TODO: had to manually install stow. Error was that stow was not existing
     # TODO: had to manually install starship. Error was that stow was not existing
