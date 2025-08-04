@@ -160,7 +160,7 @@
       args:
         executable: /usr/bin/bash  # optional: in case your system prefers zsh
       tags:
-      - dotfiles
+      - stow
 
     - name: Copy config dotfiles packages to user's home
       copy:
@@ -175,7 +175,7 @@
         - vim
         - zsh
       tags:
-      - dotfiles
+      - stow
 
     - name: Run stow with Homebrew path
       shell: |
