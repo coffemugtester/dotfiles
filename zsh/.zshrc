@@ -5,6 +5,9 @@
 # TODO: https://medium.com/aimonks/accessing-chatgpt-from-command-line-d65ba894c08 | https://medium.com/aimonks/accessing-chatgpt-from-command-line-d65ba894c08
 # TODO: ChatGPT for Neovim https://www.youtube.com/watch?v=7k0KZsheLP4 | check terminal password manager: https://www.youtube.com/watch?v=7k0KZsheLP4
 
+# Source oh my zsh plugins 
+source $HOME/.zsh_plugins
+
 export NVM_DIR="$HOME/.nvm"
 [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && . "/opt/homebrew/opt/nvm/nvm.sh"  # Load nvm
 # [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && . "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # Optional: tab completion
@@ -145,9 +148,6 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-
-# Source oh my zsh plugins 
-source ./.zsh_plugins
 
 # Tmuxifier
 eval "$(tmuxifier init -)"
