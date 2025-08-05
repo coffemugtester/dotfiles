@@ -223,9 +223,10 @@
       - stow
 
     # TODO: have to git init and set remote for dotfiles
-    # TODO: had to manually install swith to zsh. 
-    # TODO: had to manually install stow. Error was that stow was not existing
+    # TODO: had to manually switch to zsh. 
+    # TODO: had to manually install stow. Error was that stow was not existing (had to put brew in path)
     # TODO: have to manually install Nerd Fonts.
+    # TODO: had to manually install nvm, nvm install --lts, eslint & eslint_d
 
     - name: Clone TPM repository
       git:
