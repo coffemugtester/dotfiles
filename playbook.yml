@@ -253,12 +253,12 @@
       tags:
       - zsh
 
-    - name: Run zsh
-      shell: |
-        zsh
-      args: /usr/bin/zsh
-      tags:
-       - switch-zsh
+    # - name: Run zsh
+    #   shell: |
+    #     zsh
+    #   args: /usr/bin/zsh
+    #   tags:
+    #    - switch-zsh
 
     - name: Change user shell to zsh
       become: true
