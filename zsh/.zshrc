@@ -5,21 +5,24 @@
 # TODO: https://medium.com/aimonks/accessing-chatgpt-from-command-line-d65ba894c08 | https://medium.com/aimonks/accessing-chatgpt-from-command-line-d65ba894c08
 # TODO: ChatGPT for Neovim https://www.youtube.com/watch?v=7k0KZsheLP4 | check terminal password manager: https://www.youtube.com/watch?v=7k0KZsheLP4
 
+# Set Homebrew prefix depending on the OS
+if [[ "$(uname)" == "Darwin" ]]; then
+  HOMEBREW_PREFIX="/opt/homebrew"
+elif [[ "$(uname)" == "Linux" ]]; then
+  # Add Homebrew to PATH if it exists
+  HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
+  export PATH="$HOMEBREW_PREFIX/bin:$PATH"
+else
+  echo "HOMEBREW_PREFIX is missing"
+fi
+
 # Source oh my zsh plugins 
 source $HOME/.zsh_plugins
 
 export NVM_DIR="$HOME/.nvm"
-
-# Add Homebrew to PATH if it exists
-if [[ -d "/home/linuxbrew/.linuxbrew/bin" ]]; then
-  export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
-  # Add the following to your shell profile e.g. ~/.profile or ~/.zshrc:
-  [ -s "/home/linuxbrew/.linuxbrew/opt/nvm/nvm.sh" ] && \. "/home/linuxbrew/.linuxbrew/opt/nvm/nvm.sh"  # This loads nvm
-  [ -s "/home/linuxbrew/.linuxbrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/home/linuxbrew/.linuxbrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
-elif [[ "$(uname)" == "Darwin" ]]; then
-  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && . "/opt/homebrew/opt/nvm/nvm.sh"  # Load nvm
+[ -s "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" ] && . "$HOMEBREW_PREFIX/opt/nvm/nvm.sh"  # Load nvm
   # [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && . "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # Optional: tab completion
-fi
+  # [ -s "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" ] && . "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm"  # Optional: tab completion
 
 
 export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
