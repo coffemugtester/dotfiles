@@ -8,6 +8,12 @@
 # Source oh my zsh plugins 
 source $HOME/.zsh_plugins
 
+# Add Homebrew to PATH if it exists
+if [[ -d "/home/linuxbrew/.linuxbrew/bin" ]]; then
+  export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+fi
+
+
 export NVM_DIR="$HOME/.nvm"
 [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && . "/opt/homebrew/opt/nvm/nvm.sh"  # Load nvm
 # [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && . "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # Optional: tab completion
