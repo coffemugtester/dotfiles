@@ -159,17 +159,17 @@
       args:
         executable: /usr/bin/zsh
       loop:
-        # - colima
-        # - stow
-        - delve
-        - docker
+        # - colima # It's not needed for Linux machines
+        # - lima # It goes with colima
+        # - delve # TODO: there's no binary for ARM architecture so it needs to be built from source
+        # - docker # TODO: there's no binary for ARM architecture so it needs to be built from source
+        # - lazydocker # TODO: there's no binary for ARM architecture so it needs to be built from source
+        # - lazygit # TODO: there's no binary for ARM architecture so it needs to be built from source
+        - stow
         - docker-completion
         - git-filter-repo
         - htop
-        - lazydocker
-        - lazygit
         - libevent
-        - lima
         - luv
         - mpdecimal
         - ripgrep
@@ -195,7 +195,7 @@
     # /home/urbpi/.zsh_plugins:source:2: no such file or directory: /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
     # /home/urbpi/.zsh_plugins:source:3: no such file or directory: /opt/homebrew/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
     # /home/urbpi/.zsh_plugins:source:4: no such file or directory: /opt/homebrew/opt/zsh-vi-mode/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
-    # /home/urbpi/.zshrc:153: command not found: tmuxifier
+    # git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
     # /home/urbpi/.zshrc:159: command not found: starship have to install the preset too
     - name: Copy config dotfiles packages to user's home
       copy:
@@ -225,9 +225,15 @@
     # TODO: have to git init and set remote for dotfiles
     # TODO: had to manually install swith to zsh. 
     # TODO: had to manually install stow. Error was that stow was not existing
-    # TODO: had to manually install starship. Error was that stow was not existing
-    # TODO: had to manually install tmuxifier. Error was that stow was not existing
     # TODO: have to manually install Nerd Fonts.
+
+    - name: Clone TPM repository
+      git:
+        repo: 'https://github.com/tmux-plugins/tpm.git'
+        dest: /home/{{ homebrew_user }}/.tmux/plugins/tpm
+      become: true
+      become_user: {{ homebrew_user }}
+      tags: tmux
 
     - name: Install Oh My Zsh # noqa: latest
       ansible.builtin.git:
@@ -253,16 +259,9 @@
       tags:
       - zsh
 
-    # - name: Run zsh
-    #   shell: |
-    #     zsh
-    #   args: /usr/bin/zsh
-    #   tags:
-    #    - switch-zsh
-
     - name: Change user shell to zsh
       become: true
-      ansible.builtin.user:
+      user:
         name: "{{ ansible_user_id }}"
         shell: /usr/bin/zsh
       tags:

@@ -1,3 +1,18 @@
+# Set Homebrew prefix depending on the OS
+if [[ "$(uname)" == "Darwin" ]]; then
+  export HOMEBREW_PREFIX="/opt/homebrew"
+elif [[ "$(uname)" == "Linux" ]]; then
+  export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
+else
+  echo "HOMEBREW_PREFIX is missing"
+  # export HOMEBREW_PREFIX=""  # fallback or unknown
+fi
+
+# Optionally add to PATH if not already included
+# if [[ -n "$HOMEBREW_PREFIX" && ":$PATH:" != *":$HOMEBREW_PREFIX/bin:"* ]]; then
+#   export PATH="$HOMEBREW_PREFIX/bin:$PATH"
+# fi
+
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /opt/homebrew/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
