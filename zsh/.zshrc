@@ -11,7 +11,8 @@ if [[ "$(uname)" == "Darwin" ]]; then
 elif [[ "$(uname)" == "Linux" ]]; then
   # Add Homebrew to PATH if it exists
   HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
-  export PATH="$HOMEBREW_PREFIX/bin:$PATH"
+  # export PATH="$HOMEBREW_PREFIX/bin:$PATH"
+  eval "$($HOMEBREW_PREFIX/bin/brew shellenv)"
 else
   echo "HOMEBREW_PREFIX is missing"
 fi

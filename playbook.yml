@@ -15,43 +15,23 @@
       - neovim
       - asdf
       - ca-certificates
-      - colima
-      - delve
-      - docker
-      - docker-completion
       - gettext
       - git
-      - git-filter-repo
-      - htop
-      - lazydocker
-      - lazygit
-      - libevent
       - libunistring
       - libuv
-      - lima
       - lpeg
       - luajit
-      - luv
-      - mpdecimal
       - ncurses
-      - nvm
       - openssl@3
       - pcre2
       - python@3.13
       - readline
-      - ripgrep
       - sqlite
       - starship
-      - stow
-      - tmux
       - tree-sitter
       - unibilium
       - utf8proc
       - xz
-      - zsh-autocomplete
-      - zsh-autosuggestions
-      - zsh-syntax-highlighting
-      - zsh-vi-mode
 
 
   tasks:
@@ -117,27 +97,11 @@
     - name: Ensure ~/dotfiles directory exists
       become: yes
       file:
-        path: "/home/{{ homebrew_user }}/dotfiles/config/"
+        path: "/home/{{ homebrew_user }}/dotfiles/"
         state: directory
         owner: "{{ homebrew_user }}"
         group: "{{ homebrew_user }}"
         mode: '0755'
-      tags:
-      - dotfiles-config
-
-    - name: Copy config dotfiles packages to user's home
-      copy:
-        src: "./config/.config/{{ item }}"
-        dest: "/home/{{ homebrew_user }}/dotfiles/config"
-        owner: "{{ homebrew_user }}"
-        group: "{{ homebrew_user }}"
-        mode: preserve
-      loop:
-        - alacritty
-        - nvim
-        # - git
-        # - vim
-        # - tmux
       tags:
       - dotfiles-config
 
@@ -150,7 +114,41 @@
         group: "{{ homebrew_user }}"
         mode: '0755'
       tags:
-      - dotfiles
+      - dotfiles-config
+
+    - name: Clone dotfiles repository into home directory
+      git:
+        repo: "git@github.com:coffemugtester/dotfiles.git"
+        dest: "/home/{{ homebrew_user }}/dotfiles"
+        version: main
+        update: yes
+      # become: false
+      tags:
+      - dotfiles-config
+
+    - name: Update apt cache
+      become: true
+      apt:
+        update_cache: yes
+      when: ansible_os_family == "Debian"
+      tags:
+      - zsh
+
+    - name: Install ZSH
+      become: true
+      ansible.builtin.package:
+        name: zsh
+        state: present
+      tags:
+      - zsh
+
+    - name: Change user shell to zsh
+      become: true
+      user:
+        name: "{{ ansible_user_id }}"
+        shell: /usr/bin/zsh
+      tags:
+      - switch-zsh
 
     - name: Install missing Homebrew formulae
       shell: |
@@ -180,53 +178,25 @@
         - zsh-vi-mode
       tags: install_missing_formulae
 
-    - name: Run stow with Homebrew path
-      # export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+    - name: Stow .config with Homebrew path
       shell: |
-        cd ~/dotfiles
-        stow config --target /home/{{ homebrew_user }}/.config --verbose=2
+        export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+        cd ~/dotfiles/config
+        stow .config --target /home/{{ homebrew_user }}/.config --verbose=2
       args:
-        executable: /usr/bin/bash  # optional: in case your system prefers zsh
+        executable: /usr/bin/zsh  # optional: in case your system prefers zsh
       tags:
       - stow
 
-    # TODO: missing docs to put in the repo:
-    # /home/urbpi/.zsh_plugins:source:1: no such file or directory: /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-    # /home/urbpi/.zsh_plugins:source:2: no such file or directory: /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-    # /home/urbpi/.zsh_plugins:source:3: no such file or directory: /opt/homebrew/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
-    # /home/urbpi/.zsh_plugins:source:4: no such file or directory: /opt/homebrew/opt/zsh-vi-mode/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
-    # git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-    # /home/urbpi/.zshrc:159: command not found: starship have to install the preset too
-    - name: Copy config dotfiles packages to user's home
-      copy:
-        src: "./{{ item }}"
-        dest: "/home/{{ homebrew_user }}/dotfiles"
-        owner: "{{ homebrew_user }}"
-        group: "{{ homebrew_user }}"
-        mode: preserve
-      loop:
-        - git
-        - tmux
-        - vim
-        - zsh
-      tags:
-      - stow
-
-    - name: Run stow with Homebrew path
+    - name: Stow dotfiles with Homebrew path
       shell: |
         export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
         cd ~/dotfiles
         stow git tmux vim zsh --target /home/{{ homebrew_user }} --verbose=2
       args:
-        executable: /usr/bin/bash  # optional: in case your system prefers zsh
+        executable: /usr/bin/zsh  # optional: in case your system prefers zsh
       tags:
       - stow
-
-    # TODO: have to git init and set remote for dotfiles
-    # TODO: had to manually switch to zsh. 
-    # TODO: had to manually install stow. Error was that stow was not existing (had to put brew in path)
-    # TODO: have to manually install Nerd Fonts.
-    # TODO: had to manually install nvm, nvm install --lts, eslint & eslint_d
 
     - name: Clone TPM repository
       git:
@@ -244,26 +214,43 @@
       tags:
       - ohmyzsh
 
-    - name: Update apt cache
-      become: true
-      apt:
-        update_cache: yes
-      when: ansible_os_family == "Debian"
-      tags:
-      - zsh
-
-    - name: Install ZSH
-      become: true
-      ansible.builtin.package:
-        name: zsh
+    - name: Install NVM via Homebrew
+      homebrew:
+        name: nvm
         state: present
       tags:
-      - zsh
+      - nvm
 
-    - name: Change user shell to zsh
-      become: true
-      user:
-        name: "{{ ansible_user_id }}"
-        shell: /usr/bin/zsh
+    - name: Ensure NVM directory exists
+      file:
+        path: "/home/{{ homebrew_user }}/.nvm"
+        state: directory
+        mode: '0755'
       tags:
-      - switch-zsh
+      - nvm
+
+    - name: Install latest LTS Node using NVM
+      shell: |
+        export NVM_DIR="$HOME/.nvm"
+        source /home/linuxbrew/.linuxbrew/opt/nvm/nvm.sh
+        nvm install --lts
+      args:
+        executable: /usr/bin/zsh
+      environment:
+        NVM_DIR: "/home/{{ homebrew_user }}/.nvm"
+      tags:
+      - nvm
+
+    - name: Install eslint and eslint_d globally
+      shell: |
+        export NVM_DIR="$HOME/.nvm"
+        source /home/linuxbrew/.linuxbrew/opt/nvm/nvm.sh
+        nvm use --lts
+        npm install -g eslint eslint_d
+      args:
+        executable: /usr/bin/zsh
+      environment:
+        NVM_DIR: "/home/{{ homebrew_user }}/.nvm"
+      tags:
+      - nvm
+
