@@ -15,8 +15,8 @@
       - neovim
       - asdf
       - ca-certificates
-      # - colima
-      # - delve
+      - colima
+      - delve
       - docker
       - docker-completion
       - gettext
@@ -152,9 +152,37 @@
       tags:
       - dotfiles
 
-    - name: Run stow with Homebrew path
+    - name: Install missing Homebrew formulae
       shell: |
-        export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+        brew install {{ item }}
+      args:
+        executable: /usr/bin/zsh
+      loop:
+        # - colima
+        # - stow
+        - delve
+        - docker
+        - docker-completion
+        - git-filter-repo
+        - htop
+        - lazydocker
+        - lazygit
+        - libevent
+        - lima
+        - luv
+        - mpdecimal
+        - ripgrep
+        - tmux
+        - zsh-autocomplete
+        - zsh-autosuggestions
+        - zsh-syntax-highlighting
+        - zsh-vi-mode
+      tags: install_missing_formulae
+
+    - name: Run stow with Homebrew path
+      # export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+      shell: |
         cd ~/dotfiles
         stow config --target /home/{{ homebrew_user }}/.config --verbose=2
       args:
