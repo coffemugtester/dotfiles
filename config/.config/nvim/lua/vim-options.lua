@@ -8,11 +8,12 @@ vim.o.autoindent = true
 -- vim.o.smartindent = true
 -- vim.o.cindent = false  -- optional, depending on language
 
+vim.keymap.set("n", "<leader>sh", ":!", { desc = "simple command mode access" })
 
 -- Map shortcuts
-vim.keymap.set("n", "<leader>s", ":source %<CR>", { desc = "Source current file" })
-vim.keymap.set("n", "<leader>w", ":w<CR>")  -- Save
-vim.keymap.set("n", "<leader>q", ":q<CR>")  -- Quit
+-- vim.keymap.set("n", "<leader>s", ":source %<CR>", { desc = "Source current file" })
+vim.keymap.set("n", "<leader>w", ":w<CR>") -- Save
+vim.keymap.set("n", "<leader>q", ":q<CR>") -- Quit
 vim.keymap.set("n", "<leader>x", ":wq<CR>") -- Save & Quit
 vim.keymap.set("n", "<leader>e", ":Ex<CR>") -- Open netrw
 
