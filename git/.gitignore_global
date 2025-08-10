@@ -3,6 +3,7 @@
 
 # Node.js
 node_modules/
+dist/
 
 # VSCode
 .vscode/

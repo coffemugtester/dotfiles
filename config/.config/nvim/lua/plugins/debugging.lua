@@ -25,6 +25,12 @@ return {
 			dapui.close()
 		end
 
+		vim.keymap.set("n", "<leader>du", function()
+			require("dapui").toggle({})
+		end, { desc = "DAP UI" })
+		vim.keymap.set({ "n", "v" }, "<leader>de", function()
+			require("dapui").eval()
+		end, { desc = "Eval" })
 		vim.keymap.set("n", "<leader>dt", dap.toggle_breakpoint, {})
 		vim.keymap.set("n", "<leader>dc", dap.continue, {})
 	end,
