@@ -4,4 +4,4 @@
 	name = coffemugtester
 	email = coffeemugtester@gmail.com
 [core]
-	excludesfile = /Users/danielalfaro/.gitignore_global
+	excludesfile = ~/.gitignore_global

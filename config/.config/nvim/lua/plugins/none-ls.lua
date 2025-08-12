@@ -37,6 +37,9 @@ return {
 						},
 					},
 					command = "eslint_d",
+					args = {
+						"--no-warn-ignored",
+					},
 				}),
 				require("none-ls.code_actions.eslint"),
 				-- --        null_ls.builtins.formatting.rubocop -- remember to add diagnostics for used languages
