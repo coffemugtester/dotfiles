@@ -25,10 +25,9 @@ return {
 
 			vim.keymap.set("n", "<leader>gp", ":Gitsigns preview_hunk<CR>", {})
 			vim.keymap.set("n", "<leader>gt", ":Gitsigns toggle_current_line_blame<CR>", {})
+			vim.keymap.set("n", "<leader>hr", ":Gitsigns reset_hunk<CR>", {})
 			vim.keymap.set("n", "<leader>hh", nav_hunk_next, {})
 			vim.keymap.set("n", "<leader>hj", nav_hunk_prev, {})
-			-- vim.keymap.set("n", "<leader>hr", gitsigns.reset_hunk, {})
-			vim.keymap.set("n", "<leader>hr", ":Gitsigns reset_hunk<CR>", {})
 		end,
 
 		-- Other functions -- on_attach not working
