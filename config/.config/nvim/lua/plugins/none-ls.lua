@@ -48,7 +48,7 @@ return {
 						local base_args = {}
 
 						if has_eslint_config_js then
-							table.insert(base_args, "--no-warn-ignore")
+							table.insert(base_args, "--no-warn-ignored")
 						end
 
 						table.insert(base_args, params.bufname)
