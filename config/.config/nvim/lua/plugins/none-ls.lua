@@ -37,9 +37,24 @@ return {
 						},
 					},
 					command = "eslint_d",
-					args = {
-						"--no-warn-ignored",
-					},
+					-- args = {
+					-- 	"--no-warn-ignored",
+					-- },
+					args = function(params)
+						local root = params.root or vim.fn.getcwd()
+						local has_eslint_config_js = vim.fn.filereadable(root .. "/eslint.config.js") == 1
+						-- local has_eslintrc_json = vim.fn.filereadable(root .. "/.eslintrc.json") == 1
+
+						local base_args = {}
+
+						if has_eslint_config_js then
+							table.insert(base_args, "--no-warn-ignore")
+						end
+
+						table.insert(base_args, params.bufname)
+
+						return base_args
+					end,
 				}),
 				require("none-ls.code_actions.eslint"),
 				-- --        null_ls.builtins.formatting.rubocop -- remember to add diagnostics for used languages
