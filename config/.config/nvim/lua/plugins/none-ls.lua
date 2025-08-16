@@ -36,25 +36,56 @@ return {
 							"Once spawned, the server will continue to run in the background. This is normal and not related to null-ls. You can stop it by running `eslint_d stop` from the command line.",
 						},
 					},
-					command = "eslint_d",
+					-- command = "eslint_d",
+					command = function(params)
+						local root = params.root or vim.fn.getcwd()
+						local has_legacy_config = vim.fn.filereadable(root .. "/.eslintrc.json") == 1
+							or vim.fn.filereadable(root .. "/.eslintrc.js") == 1
+							or vim.fn.filereadable(root .. "/.eslintrc.yml") == 1
+
+						return has_legacy_config and "eslint" or "eslint_d"
+					end,
+					-- rest of your config...
+
 					-- args = {
 					-- 	"--no-warn-ignored",
 					-- },
 					args = function(params)
 						local root = params.root or vim.fn.getcwd()
 						local has_eslint_config_js = vim.fn.filereadable(root .. "/eslint.config.js") == 1
-						-- local has_eslintrc_json = vim.fn.filereadable(root .. "/.eslintrc.json") == 1
+						local has_legacy_config = vim.fn.filereadable(root .. "/.eslintrc.json") == 1
+							or vim.fn.filereadable(root .. "/.eslintrc.js") == 1
+							or vim.fn.filereadable(root .. "/.eslintrc.yml") == 1
 
 						local base_args = {}
 
-						if has_eslint_config_js then
+						if has_legacy_config then
+							-- Regular eslint needs explicit JSON format
+							table.insert(base_args, "--format")
+							table.insert(base_args, "json")
+						elseif has_eslint_config_js then
 							table.insert(base_args, "--no-warn-ignored")
 						end
 
 						table.insert(base_args, params.bufname)
-
 						return base_args
 					end,
+
+					-- args = function(params)
+					-- 	local root = params.root or vim.fn.getcwd()
+					-- 	local has_eslint_config_js = vim.fn.filereadable(root .. "/eslint.config.js") == 1
+					-- 	-- local has_eslintrc_json = vim.fn.filereadable(root .. "/.eslintrc.json") == 1
+					--
+					-- 	local base_args = {}
+					--
+					-- 	if has_eslint_config_js then
+					-- 		table.insert(base_args, "--no-warn-ignored")
+					-- 	end
+					--
+					-- 	table.insert(base_args, params.bufname)
+					--
+					-- 	return base_args
+					-- end,
 				}),
 				require("none-ls.code_actions.eslint"),
 				-- --        null_ls.builtins.formatting.rubocop -- remember to add diagnostics for used languages
