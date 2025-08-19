@@ -159,6 +159,7 @@ fi
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # Tmuxifier
+export PATH="$HOME/.tmuxifier/bin:$PATH"
 eval "$(tmuxifier init -)"
 # Help for tmuxifier
 # tmuxifier help
