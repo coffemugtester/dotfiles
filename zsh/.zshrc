@@ -1,5 +1,3 @@
-# TODO: set up tmuxifier's .tmux-layouts next to .tmux.conf
-
 # Set Homebrew prefix depending on the OS
 if [[ "$(uname)" == "Darwin" ]]; then
   HOMEBREW_PREFIX="/opt/homebrew"
