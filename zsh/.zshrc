@@ -157,11 +157,9 @@ fi
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # Tmuxifier
-export PATH="$HOME/.tmuxifier/bin:$PATH"
+# export PATH="$HOME/.tmuxifier/bin:$PATH"
+export TMUXIFIER_LAYOUT_PATH="$HOME/.tmux-layouts"
 eval "$(tmuxifier init -)"
-# Help for tmuxifier
-# tmuxifier help
-# TODO: go through usage and set tmuxifier up --- https://github.com/jimeh/tmuxifier
 
 # Starship
 eval "$(starship init zsh)"
