@@ -119,6 +119,16 @@ return {
 			vim.keymap.set("n", "<leader>dc", dap.continue, {})
 		end,
 	},
+	{
+		"mfussenegger/nvim-dap-python",
+		dependencies = {
+			"mfussenegger/nvim-dap",
+		},
+		config = function(_, _) -- 2nd arg: opts
+			local path = "~/.local/share/nvim/mason/packages/debudpy/venv/bin/python"
+			require("dap-python").setup(path)
+		end,
+	},
 	-- {
 	--   "mxsdev/nvim-dap-vscode-js",
 	--   dependencies = { "mfussenegger/nvim-dap" },

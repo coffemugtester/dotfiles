@@ -10,6 +10,10 @@ else
   echo "HOMEBREW_PREFIX is missing"
 fi
 
+source $HOME/.env
+
+export PATH="$(brew --prefix python)/bin:$PATH"
+
 # Source oh my zsh plugins 
 source $HOME/.zsh_plugins
 
@@ -155,6 +159,9 @@ fi
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# Created by `pipx` on 2025-09-01 12:04:47
+export PATH="$PATH:$HOME/.local/bin"
 
 # Tmuxifier
 # export PATH="$HOME/.tmuxifier/bin:$PATH"
