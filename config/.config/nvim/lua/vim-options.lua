@@ -27,7 +27,7 @@ vim.keymap.set("n", "<c-l>", ":wincmd l <CR>")
 -- vim.keymap.set("n", "<leader>n", ":Neotree filesystem reveal left<CR>") -- Open project tree
 
 -- Yank to clipboard in visual mode
-vim.keymap.set("v", "<C-y>", '"+y', { noremap = true })
+-- vim.keymap.set("v", "<C-y>", '"+y', { noremap = true })
 
 -- You already use <C-p> for Telescope, so use <leader>p instead:
 vim.keymap.set("n", "<leader>p", '"+p', { noremap = true })

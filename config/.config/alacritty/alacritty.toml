@@ -23,3 +23,26 @@ action = "ScrollLineDown"
 [window]
 opacity = 0.75
 
+# Use OSC-8 when present
+[[hints.enabled]]
+hyperlinks = true
+command = "open"
+post_processing = true
+[hints.enabled.mouse]
+enabled = true
+mods = "None"
+[hints.enabled.binding]
+key = "U"
+mods = "Control|Shift"
+
+# Fallback for plain URLs (what most NVim plugins print)
+[[hints.enabled]]
+regex = "(https?://[^\\s<>\"']+)"
+command = "open"        # use "xdg-open" on Linux
+post_processing = true
+[hints.enabled.mouse]
+enabled = true
+mods = "None"           # click to open
+[hints.enabled.binding]
+key = "Y"
+mods = "Control|Shift"

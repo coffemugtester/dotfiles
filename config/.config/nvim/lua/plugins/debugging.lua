@@ -125,7 +125,7 @@ return {
 			"mfussenegger/nvim-dap",
 		},
 		config = function(_, _) -- 2nd arg: opts
-			local path = "~/.local/share/nvim/mason/packages/debudpy/venv/bin/python"
+			local path = "~/.local/share/nvim/mason/packages/debugpy/venv/bin/python"
 			require("dap-python").setup(path)
 		end,
 	},

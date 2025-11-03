@@ -159,6 +159,8 @@ fi
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias devup="devcontainer up --workspace-folder ."
+alias devex="devcontainer exec --workspace-folder . zsh"
 
 # Created by `pipx` on 2025-09-01 12:04:47
 export PATH="$PATH:$HOME/.local/bin"

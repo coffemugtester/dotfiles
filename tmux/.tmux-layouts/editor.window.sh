@@ -9,9 +9,9 @@ new_window "editor"
 run_cmd "nvim"     # runs in active pane
 
 # Split window into panes.
-split_h 30
+split_h 10
 
-split_v 30
+# split_v 30
 # Run commands.
 #run_cmd "date" 1  # runs in pane 1
 
