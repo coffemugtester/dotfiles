@@ -20,6 +20,19 @@ key = "j"
 mods = "Control|Shift"
 action = "ScrollLineDown"
 
+[[keyboard.bindings]]
+key = "Comma"
+mods = "Control"
+chars = "\u001b[44;5u"   # CSI-u for Ctrl+Comma
+
+# alternative syntax
+# [keyboard]
+# bindings = [
+#   # …your existing bindings…,
+#   { key = "Comma", mods = "Control", chars = "\u001b[44;5u" }
+# ]
+
+
 [window]
 opacity = 0.75
 
