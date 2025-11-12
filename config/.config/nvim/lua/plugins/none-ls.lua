@@ -39,56 +39,83 @@ return {
 							"Once spawned, the server will continue to run in the background. This is normal and not related to null-ls. You can stop it by running `eslint_d stop` from the command line.",
 						},
 					},
-					-- command = "eslint_d",
+					-- none-ls source config
 					command = function(params)
-						local root = params.root or vim.fn.getcwd()
-						local has_legacy_config = vim.fn.filereadable(root .. "/.eslintrc.json") == 1
-							or vim.fn.filereadable(root .. "/.eslintrc.js") == 1
-							or vim.fn.filereadable(root .. "/.eslintrc.yml") == 1
-
-						return has_legacy_config and "eslint" or "eslint_d"
-					end,
-					-- rest of your config...
-
-					-- args = {
-					-- 	"--no-warn-ignored",
-					-- },
-					args = function(params)
-						local root = params.root or vim.fn.getcwd()
-						local has_eslint_config_js = vim.fn.filereadable(root .. "/eslint.config.js") == 1
-						local has_legacy_config = vim.fn.filereadable(root .. "/.eslintrc.json") == 1
-							or vim.fn.filereadable(root .. "/.eslintrc.js") == 1
-							or vim.fn.filereadable(root .. "/.eslintrc.yml") == 1
-
-						local base_args = {}
-
-						if has_legacy_config then
-							-- Regular eslint needs explicit JSON format
-							table.insert(base_args, "--format")
-							table.insert(base_args, "json")
-						elseif has_eslint_config_js then
-							table.insert(base_args, "--no-warn-ignored")
+						-- helpers (same as before) ...
+						local function is_win()
+							return vim.loop.os_uname().version:match("Windows")
 						end
 
-						table.insert(base_args, params.bufname)
-						return base_args
+						local function file_exists(p)
+							local st = vim.loop.fs_stat(p)
+							return st and st.type == "file"
+						end
+
+						local function has_legacy_config(root)
+							return vim.fn.filereadable(root .. "/.eslintrc.json") == 1
+								or vim.fn.filereadable(root .. "/.eslintrc.js") == 1
+								or vim.fn.filereadable(root .. "/.eslintrc.yml") == 1
+								or vim.fn.filereadable(root .. "/.eslintrc.yaml") == 1
+						end
+
+						local function local_bin(root, name)
+							local suffix = is_win() and ".cmd" or ""
+							local p = root .. "/node_modules/.bin/" .. name .. suffix
+							return file_exists(p) and p or nil
+						end
+
+						local root = params.root or vim.fn.getcwd()
+						local legacy = has_legacy_config(root)
+						if legacy then
+							return local_bin(root, "eslint") or "eslint"
+						else
+							return local_bin(root, "eslint_d") or "eslint_d"
+						end
 					end,
 
-					-- args = function(params)
-					-- 	local root = params.root or vim.fn.getcwd()
-					-- 	local has_eslint_config_js = vim.fn.filereadable(root .. "/eslint.config.js") == 1
-					-- 	-- local has_eslintrc_json = vim.fn.filereadable(root .. "/.eslintrc.json") == 1
-					--
-					-- 	local base_args = {}
-					--
-					-- 	if has_eslint_config_js then
-					-- 		table.insert(base_args, "--no-warn-ignored")
-					-- 	end
-					--
-					-- 	table.insert(base_args, params.bufname)
-					--
-					-- 	return base_args
-					-- end,
+					args = function(params)
+						local function has_legacy_config(root)
+							return vim.fn.filereadable(root .. "/.eslintrc.json") == 1
+								or vim.fn.filereadable(root .. "/.eslintrc.js") == 1
+								or vim.fn.filereadable(root .. "/.eslintrc.yml") == 1
+								or vim.fn.filereadable(root .. "/.eslintrc.yaml") == 1
+						end
+
+						local function has_flat_config(root)
+							return vim.fn.filereadable(root .. "/eslint.config.js") == 1
+								or vim.fn.filereadable(root .. "/eslint.config.mjs") == 1
+								or vim.fn.filereadable(root .. "/eslint.config.cjs") == 1
+								or vim.fn.filereadable(root .. "/eslint.config.ts") == 1
+						end
+
+						local root = params.root or vim.fn.getcwd()
+						local legacy = has_legacy_config(root)
+						local flat = has_flat_config(root)
+
+						local a = {
+							"--format",
+							"json", -- force JSON so none-ls can decode
+							"--stdin", -- read code from stdin
+							"--stdin-filename",
+							params.bufname, -- make ESLint resolve config/ignores properly
+							"--no-error-on-unmatched-pattern", -- avoid noisy errors on single files
+						}
+
+						if legacy then
+							-- helps plugin resolution in monorepos for legacy configs
+							table.insert(a, "--resolve-plugins-relative-to")
+							table.insert(a, root)
+						elseif flat then
+							-- optional but explicit; ESLint will auto-find it anyway
+							-- table.insert(a, "--config"); table.insert(a, root .. "/eslint.config.js")
+							-- Flat config sometimes warns a lot about ignores:
+							table.insert(a, "--no-warn-ignored")
+						else
+							table.insert(a, "--no-warn-ignored")
+						end
+
+						return a
+					end,
 				}),
 				require("none-ls.code_actions.eslint"),
 				-- --        null_ls.builtins.formatting.rubocop -- remember to add diagnostics for used languages
