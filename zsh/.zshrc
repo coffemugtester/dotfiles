@@ -159,6 +159,7 @@ fi
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias air="$HOME/.asdf/installs/golang/1.24.5/bin/air"
 alias dup="devcontainer up --workspace-folder ."
 alias dex="devcontainer exec --workspace-folder . zsh"
 
