@@ -10,10 +10,11 @@ new_window "claude-editor"
 run_cmd "nvim"     # runs in active pane
 
 # Split window into panes.
-split_h 10
+split_h 20
 send_keys "air"
 
 split_v 30
+run_cmd "npm i"
 run_cmd "gst"
 
 # Run commands.
