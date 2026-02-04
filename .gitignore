@@ -1,6 +1,11 @@
 nvm/
 asdf/
 tmux/.tmux/plugins/
+<<<<<<< Updated upstream
 runebook/
 gcloud/
 
+||||||| Stash base
+
+=======
+>>>>>>> Stashed changes
