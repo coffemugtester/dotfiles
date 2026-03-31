@@ -180,3 +180,6 @@ if [ -f '/Users/danielalfaro/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/da
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/danielalfaro/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/danielalfaro/google-cloud-sdk/completion.zsh.inc'; fi
+
+# bun completions
+[ -s "/Users/danielalfaro/.bun/_bun" ] && source "/Users/danielalfaro/.bun/_bun"

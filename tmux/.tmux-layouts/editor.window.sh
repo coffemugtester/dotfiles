@@ -24,3 +24,9 @@ run_cmd "gst"
 
 # Set active pane.
 select_pane 1
+
+# TODO: wrap the following in a script:
+# exec devcontainer exec \
+  # --workspace-folder . \
+  # --interactive \
+  # zsh -lc "nvim"
