@@ -25,6 +25,18 @@ return {
 		config = function()
 			local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
+			-- it might become heavy and slow in bigger projects: `cargo check` and `cargo clippy` before commits
+			vim.lsp.config("rust_analyzer", {
+				capabilities = capabilities,
+				settings = {
+					["rust-analyzer"] = {
+						check = {
+							command = "check",
+						},
+					},
+				},
+			})
+			vim.lsp.enable("rust_analyzer")
 			-- local lspconfig = require("lspconfig")
 			vim.lsp.config("gopls", {
 				capabilities = capabilities,
