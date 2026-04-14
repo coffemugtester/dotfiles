@@ -2,7 +2,10 @@ return {
 	"David-Kunz/gen.nvim",
 	config = function()
 		require("gen").setup({
-			model = "qwen3:14b", -- The default model to use.
+			-- model = "qwen3:14b", -- The default model to use.
+			-- model = "gemma3:27b", -- The default model to use.
+			-- model = "gemma4:26b", -- The default model to use.
+			model = "gpt-oss:20b", -- The default model to use.
 			show_model = true,
 			think = false, -- Whether to show thinking messages.
 			body = { think = false, stream = true },
