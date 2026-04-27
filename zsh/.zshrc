@@ -183,3 +183,6 @@ if [ -f '/Users/danielalfaro/google-cloud-sdk/completion.zsh.inc' ]; then . '/Us
 
 # bun completions
 [ -s "/Users/danielalfaro/.bun/_bun" ] && source "/Users/danielalfaro/.bun/_bun"
+
+# Vite+ bin (https://viteplus.dev)
+. "$HOME/.vite-plus/env"

@@ -49,10 +49,13 @@ return {
 						"svelte",
 					},
 				}),
-				require("none-ls.diagnostics.eslint_d").with({
+				require("none-ls.formatting.eslint").with({
 					condition = has_eslint_config,
 				}),
-				require("none-ls.code_actions.eslint_d").with({
+				require("none-ls.diagnostics.eslint").with({
+					condition = has_eslint_config,
+				}),
+				require("none-ls.code_actions.eslint").with({
 					condition = has_eslint_config,
 				}),
 			},

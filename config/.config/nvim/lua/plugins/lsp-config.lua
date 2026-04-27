@@ -130,6 +130,7 @@ return {
 			vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
 			vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, {})
 			vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, {})
+			vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, {})
 			vim.diagnostic.config({
 				virtual_text = true, -- show inline errors (like red squiggles)
 				signs = true, -- show icons in the sign column

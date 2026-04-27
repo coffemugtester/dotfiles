@@ -2,9 +2,11 @@
 # Must be called before `initialize_session`.
 session_root "${PWD}"
 
+session_name="lab-$(basename "$PWD" | tr '.:' '__')"
+
 # Create session with specified name if it does not already exist. If no
 # argument is given, session name will be based on layout file name.
-if initialize_session "lab"; then
+if initialize_session "$session_name"; then
 
   # Create a new window inline within session layout definition.
   #new_window "misc"

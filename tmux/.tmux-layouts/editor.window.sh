@@ -9,10 +9,12 @@ new_window "editor"
 run_cmd "nvim"     # runs in active pane
 
 # Split window into panes.
-split_h 10
-send_keys "air"
+split_h 30
+run_cmd "claude"
 
-split_v 30
+split_v 40
+
+split_v 50
 run_cmd "gst"
 
 # Run commands.
