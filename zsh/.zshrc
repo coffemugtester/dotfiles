@@ -1,6 +1,7 @@
 # Set Homebrew prefix depending on the OS
 if [[ "$(uname)" == "Darwin" ]]; then
   HOMEBREW_PREFIX="/opt/homebrew"
+  eval "$($HOMEBREW_PREFIX/bin/brew shellenv)"
 elif [[ "$(uname)" == "Linux" ]]; then
   # Add Homebrew to PATH if it exists
   HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
@@ -13,6 +14,7 @@ fi
 source $HOME/.env
 
 export PATH="$(brew --prefix python)/bin:$PATH"
+export PATH="$HOME/.composer/vendor/bin:$HOME/.config/composer/vendor/bin:$PATH"
 
 # Source oh my zsh plugins 
 source $HOME/.zsh_plugins

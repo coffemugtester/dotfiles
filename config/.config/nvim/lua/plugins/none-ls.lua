@@ -34,6 +34,8 @@ return {
 				null_ls.builtins.diagnostics.mypy,
 				null_ls.builtins.formatting.black,
 				null_ls.builtins.formatting.stylua,
+				null_ls.builtins.formatting.phpcsfixer, -- PHP formatter (Laravel-friendly)
+				null_ls.builtins.diagnostics.phpstan, -- PHP linter (Laravel-friendly)
 				null_ls.builtins.formatting.prettierd.with({
 					filetypes = {
 						"javascript",

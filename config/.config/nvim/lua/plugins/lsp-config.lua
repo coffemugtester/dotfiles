@@ -6,7 +6,7 @@ return {
 	{
 		"mason-org/mason-lspconfig.nvim",
 		opts = {
-			ensure_installed = { "lua_ls", "ts_ls", "gopls", "pyright", "ruff" }, -- "mypy", "debugpy", "black", -- could these be missing for python debugging?
+			ensure_installed = { "lua_ls", "ts_ls", "gopls", "pyright", "ruff", "intelephense" }, -- "mypy", "debugpy", "black", -- could these be missing for python debugging?
 		},
 		dependencies = {
 			{ "mason-org/mason.nvim", opts = {} },
@@ -123,6 +123,25 @@ return {
 			})
 			vim.lsp.enable("jsonls")
 			-- lspconfig.jsonls.setup({
+			-- 	capabilities = capabilities,
+			-- })
+
+			-- PHP LSP (with Laravel support)
+			vim.lsp.config("intelephense", {
+				capabilities = capabilities,
+				settings = {
+					intelephense = {
+						files = {
+							maxSize = 5000000,
+						},
+						environment = {
+							phpVersion = "8.2", -- Adjust to your PHP version
+						},
+					},
+				},
+			})
+			vim.lsp.enable("intelephense")
+			-- lspconfig.intelephense.setup({
 			-- 	capabilities = capabilities,
 			-- })
 
